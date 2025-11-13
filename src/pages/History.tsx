@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { Edit, Trash2, Search } from 'lucide-react';
+import ProjectIcon from '@/components/ProjectIcon';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +30,7 @@ interface Task {
   total_minutes: number;
   notes: string | null;
   project_id: string;
-  projects: { project_name: string };
+  projects: { project_name: string; icon: string | null };
 }
 
 const History = () => {
@@ -56,7 +57,7 @@ const History = () => {
     setLoading(true);
     const { data, error } = await supabase
       .from('tasks')
-      .select('*, projects(project_name)')
+      .select('*, projects(project_name, icon)')
       .eq('user_id', user?.id)
       .order('date', { ascending: false });
 
@@ -214,7 +215,10 @@ const History = () => {
                       <TableRow key={task.id}>
                         {groupBy === 'date' && (
                           <TableCell className="font-medium">
-                            {task.projects.project_name}
+                            <div className="flex items-center gap-2">
+                              <ProjectIcon iconName={task.projects.icon} />
+                              <span>{task.projects.project_name}</span>
+                            </div>
                           </TableCell>
                         )}
                         {groupBy === 'project' && (

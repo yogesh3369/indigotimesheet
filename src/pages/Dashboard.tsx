@@ -14,7 +14,7 @@ interface Task {
   minutes: number;
   total_minutes: number;
   project_id: string;
-  projects: { project_name: string };
+  projects: { project_name: string; icon: string | null };
 }
 
 const Dashboard = () => {
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
     const { data, error } = await supabase
       .from('tasks')
-      .select('*, projects(project_name)')
+      .select('*, projects(project_name, icon)')
       .eq('user_id', user?.id)
       .gte('date', startDate)
       .order('date', { ascending: true });

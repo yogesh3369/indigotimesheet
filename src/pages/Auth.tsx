@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Check, X } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -47,8 +48,37 @@ const Auth = () => {
     setLoading(false);
   };
 
+  const validatePassword = (pwd: string) => {
+    const hasUpperCase = /[A-Z]/.test(pwd);
+    const hasLowerCase = /[a-z]/.test(pwd);
+    const hasNumber = /[0-9]/.test(pwd);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+    const isLongEnough = pwd.length >= 8;
+
+    return {
+      hasUpperCase,
+      hasLowerCase,
+      hasNumber,
+      hasSpecialChar,
+      isLongEnough,
+      isValid: hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough,
+    };
+  };
+
+  const passwordValidation = validatePassword(password);
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!passwordValidation.isValid) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid Password',
+        description: 'Please meet all password requirements',
+      });
+      return;
+    }
+
     setLoading(true);
 
     const { error } = await signUp(email, password, firstName, lastName);
@@ -160,8 +190,63 @@ const Auth = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  {password && (
+                    <div className="mt-2 space-y-1 text-xs">
+                      <p className="font-medium text-muted-foreground mb-1">Password must contain:</p>
+                      <div className="flex items-center gap-2">
+                        {passwordValidation.isLongEnough ? (
+                          <Check className="h-3 w-3 text-green-600" />
+                        ) : (
+                          <X className="h-3 w-3 text-red-600" />
+                        )}
+                        <span className={passwordValidation.isLongEnough ? 'text-green-600' : 'text-red-600'}>
+                          At least 8 characters
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {passwordValidation.hasUpperCase ? (
+                          <Check className="h-3 w-3 text-green-600" />
+                        ) : (
+                          <X className="h-3 w-3 text-red-600" />
+                        )}
+                        <span className={passwordValidation.hasUpperCase ? 'text-green-600' : 'text-red-600'}>
+                          One uppercase letter (A-Z)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {passwordValidation.hasLowerCase ? (
+                          <Check className="h-3 w-3 text-green-600" />
+                        ) : (
+                          <X className="h-3 w-3 text-red-600" />
+                        )}
+                        <span className={passwordValidation.hasLowerCase ? 'text-green-600' : 'text-red-600'}>
+                          One lowercase letter (a-z)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {passwordValidation.hasNumber ? (
+                          <Check className="h-3 w-3 text-green-600" />
+                        ) : (
+                          <X className="h-3 w-3 text-red-600" />
+                        )}
+                        <span className={passwordValidation.hasNumber ? 'text-green-600' : 'text-red-600'}>
+                          One number (0-9)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {passwordValidation.hasSpecialChar ? (
+                          <Check className="h-3 w-3 text-green-600" />
+                        ) : (
+                          <X className="h-3 w-3 text-red-600" />
+                        )}
+                        <span className={passwordValidation.hasSpecialChar ? 'text-green-600' : 'text-red-600'}>
+                          One special character (!@#$%^&*...)
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button type="submit" className="w-full" disabled={loading || (password && !passwordValidation.isValid)}>
                   {loading ? 'Creating account...' : 'Sign Up'}
                 </Button>
               </form>
