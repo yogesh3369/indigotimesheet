@@ -1,105 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@custom-variant dark (&:is(.dark *));
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+:root {
+  --font-size: 16px;
+  /* Typography Variables */
+  --text-h1: 44px;
+  --text-h2: 40px;
+  --text-h3: 32px;
+  --text-h4: 24px;
+  --text-base: 16px;
+  --text-label: 12px;
+  --font-bauhaus: "Bauhaus Std", "Arial Black", "Helvetica Bold", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  
+  /* The default background color for the application. */
+  --background: 221 100% 98%;
+  /* The default color for elements or text that appears on top of the background. */
+  --foreground: 222 38% 22%;
+  /* The background color for cards, modals, and other containers. */
+  --card: 0 0% 100%;
+  /* The default color for text or elements that appear on top of cards, modals and other background containers. */
+  --card-foreground: 222 38% 22%;
+  /* The background color for dropdowns and tooltips. */
+  --popover: 0 0% 100%;
+  /* The default color for text or elements that appear on top of dropdowns and tooltips. */
+  --popover-foreground: 222 25% 47%;
+  /* The primary color used for buttons, links, and other interactive elements. */
+  --primary: 240 100% 30%;
+  /* The default color for text or elements that appear on top of primary colored elements. */
+  --primary-foreground: 0 0% 100%;
+  /* The secondary color used for secondary(but NOT-DESTRUCTIVE) buttons and interactive elements. */
+  --secondary: 197 100% 85%;
+  /* The default color for text or elements that appear on top of secondary colored elements. */
+  --secondary-foreground: 240 100% 30%;
+  /* The muted color used for less prominent elements, such as disabled buttons or disabled text. */
+  --muted: 220 14% 93%;
+  /* The default color for text or elements that appear on top of muted colored elements. */
+  --muted-foreground: 220 9% 61%;
+  /* The accent color used for highlights, links, and other interactive elements. */
+  --accent: 197 65% 49%;
+  /* The default color for text or elements that appear on top of accent colored elements. */
+  --accent-foreground: 0 0% 100%;
+  /* The color used for background in destructive actions, such as delete buttons or error messages. */
+  --destructive: 357 51% 91%;
+  /* The default color for text or elements that appear on top of destructive colored elements. */
+  --destructive-foreground: 356 61% 46%;
+  /* The default border color for elements such as inputs, buttons, and other containers. */
+  --border: 214 47% 95%;
+  /* The default background color for input fields once the text has been filled. Should be either transparent or match the input-background. */
+  --input: 0 0% 100%;
+  /* The default background color for input fields, text areas, and other input elements. */
+  --input-background: 0 0% 100%;
+  /* The color for focus rings, outlines, and other focus indicators. */
+  --ring: 240 100% 30%;
+  /* Shadow for small elevations, such as cards or modals. */
+  --elevation-sm: 0px 0px 12px 0px rgba(76, 93, 158, 0.08);
+  /* The color for chart elements, such as a bar or line in a chart. */
+  --chart-1: 240 100% 30%;
+  /* The color for another chart element, such as a bar or line in a chart. */
+  --chart-2: 197 65% 49%;
+  /* The color for another chart element, such as a bar or line in a chart. */
+  --chart-3: 142 46% 66%;
+  /* The color for another chart element, such as a bar or line in a chart. */
+  --chart-4: 197 100% 85%;
+  /* The color for another chart element, such as a bar or line in a chart. */
+  --chart-5: 220 9% 61%;
+  /* The default border radius for elements such as buttons, cards, and other containers. */
+  --radius: 8px;
+  /* Border radius for button components. */
+  --radius-button: 20px;
+  /* Border radius for card-like containers. */
+  --radius-card: 16px;
+  /* Border radius for tooltips and small floating elements. */
+  --radius-tooltip: 12px;
+  /* The background color for sidebars, navigation menus, and other persistent elements. */
+  --sidebar: 0 0% 100%;
+  /* The default color for text or elements that appear on top of sidebars, navigation menus, and other persistent elements. */
+  --sidebar-foreground: 222 38% 22%;
+  /* The primary color used for buttons, links, and other interactive elements in sidebars and navigation menus. */
+  --sidebar-primary: 240 100% 30%;
+  /* The default color for text or elements that appear on top of primary colored elements in sidebars and navigation menus. */
+  --sidebar-primary-foreground: 0 0% 100%;
+  /* The accent color used for highlights, links, and other interactive elements in sidebars and navigation menus. */
+  --sidebar-accent: 197 65% 49%;
+  /* The default color for text or elements that appear on top of accent colored elements in sidebars and navigation menus. */
+  --sidebar-accent-foreground: 0 0% 100%;
+  /* The default border color for elements in sidebars and navigation menus. */
+  --sidebar-border: 214 47% 95%;
+  /* The default color for focus rings, outlines, and other focus indicators in sidebars and navigation menus. */
+  --sidebar-ring: 240 100% 30%;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-poppins);
   }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-family: var(--font-bauhaus);
+      font-size: var(--text-h1);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.2;
+      color: hsl(var(--foreground));
+    }
+
+    h2 {
+      font-family: var(--font-bauhaus);
+      font-size: var(--text-h2);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.2;
+      color: hsl(var(--foreground));
+    }
+
+    h3 {
+      font-family: var(--font-bauhaus);
+      font-size: var(--text-h3);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.2;
+      color: hsl(var(--foreground));
+    }
+
+    h4 {
+      font-family: var(--font-bauhaus);
+      font-size: var(--text-h4);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.2;
+      color: hsl(var(--foreground));
+    }
+
+    p {
+      font-family: var(--font-poppins);
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+      color: hsl(var(--foreground));
+    }
+
+    label {
+      font-family: var(--font-poppins);
+      font-size: var(--text-label);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+      color: hsl(var(--foreground));
+    }
+
+    button {
+      font-family: var(--font-poppins);
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-family: var(--font-poppins);
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Hide scrollbar while maintaining scroll functionality */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
