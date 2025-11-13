@@ -110,6 +110,34 @@ const AddTask = () => {
     );
   };
 
+  const handleHoursChange = (id: string, value: string) => {
+    // Allow empty string for clearing
+    if (value === '') {
+      updateTask(id, 'hours', '0');
+      return;
+    }
+    
+    const numValue = parseInt(value);
+    // Only update if it's a valid number between 0 and 23
+    if (!isNaN(numValue) && numValue >= 0 && numValue <= 23) {
+      updateTask(id, 'hours', value);
+    }
+  };
+
+  const handleMinutesChange = (id: string, value: string) => {
+    // Allow empty string for clearing
+    if (value === '') {
+      updateTask(id, 'minutes', '0');
+      return;
+    }
+    
+    const numValue = parseInt(value);
+    // Only update if it's a valid number between 0 and 59
+    if (!isNaN(numValue) && numValue >= 0 && numValue <= 59) {
+      updateTask(id, 'minutes', value);
+    }
+  };
+
   const validateTasks = () => {
     const today = startOfDay(new Date());
     const sevenDaysAgo = startOfDay(subDays(new Date(), 7));
@@ -322,7 +350,7 @@ const AddTask = () => {
                   <Input
                     type="number"
                     value={task.hours}
-                    onChange={(e) => updateTask(task.id, 'hours', e.target.value)}
+                    onChange={(e) => handleHoursChange(task.id, e.target.value)}
                     min="0"
                     max="23"
                   />
@@ -335,7 +363,7 @@ const AddTask = () => {
                   <Input
                     type="number"
                     value={task.minutes}
-                    onChange={(e) => updateTask(task.id, 'minutes', e.target.value)}
+                    onChange={(e) => handleMinutesChange(task.id, e.target.value)}
                     min="0"
                     max="59"
                   />
